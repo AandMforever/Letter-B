@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Letter B</title>
+<style>
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #2d1b3d, #4b2a63);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #f2d6ff;
+}
+
+.subtitle {
+  font-size: 16px;
+  margin-bottom: 40px;
+  opacity: 0.8;
+}
+
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 30px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 25px rgba(255, 0, 150, 0.2);
+  transition: 0.4s ease;
+}
+
+.scramble {
+  font-size: 22px;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+  color: #ffb3ff;
+}
+
+input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  width: 80%;
+  font-size: 16px;
+  text-align: center;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: none;
+  background: #ff66cc;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #ff3399;
+}
+
+.message {
+  margin-top: 20px;
+  font-size: 16px;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.final {
+  font-size: 22px;
+  margin-top: 40px;
+  opacity: 0;
+  transition: 1s ease;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>B is for Balanced</h1>
+  <div class="subtitle">Unscramble the word to see how we balance each other.</div>
+
+  <div class="card">
+    <div id="scramble" class="scramble"></div>
+    <input id="answer" placeholder="Type your answer..." />
+    <br>
+    <button onclick="checkAnswer()">Submit</button>
+    <div id="message" class="message"></div>
+  </div>
+
+  <div id="finalMessage" class="final"></div>
+</div>
+
+<script>
+const words = [
+  { scramble: "REVONOHTKNI G", answer: "overthinking", text: "You overthink. I'm helpful." },
+  { scramble: "DAS", answer: "sad", text: "You’re sad. I’m cheerful." },
+  { scramble: "DEROB", answer: "bored", text: "You’re bored. I’m entertaining." },
+  { scramble: "DERIT", answer: "tired", text: "You’re tired. I’m energetic." },
+  { scramble: "NWO", answer: "own", text: "" },
+  { scramble: "LEGNA", answer: "angel", text: "" }
+];
+
+let current = 0;
+
+function loadWord() {
+  document.getElementById("scramble").innerText = words[current].scramble;
+  document.getElementById("answer").value = "";
+  document.getElementById("message").style.opacity = 0;
+}
+
+function checkAnswer() {
+  let userInput = document.getElementById("answer").value.toLowerCase().trim();
+  if (userInput === words[current].answer) {
+
+    if (current < 4) {
+      document.getElementById("message").innerText = words[current].text;
+      document.getElementById("message").style.opacity = 1;
+      current++;
+      setTimeout(loadWord, 1500);
+    } 
+    else if (current === 4) {
+      current++;
+      loadWord();
+    }
+    else {
+      document.querySelector(".card").style.display = "none";
+      document.getElementById("finalMessage").innerHTML =
+        "I was fine on my <span style='color:#ff99ff'>OWN</span>...<br><br>Until I found an <span style='color:#ff66cc'>ANGEL</span> like you.";
+      document.getElementById("finalMessage").style.opacity = 1;
+    }
+
+  }
+}
+
+loadWord();
+</script>
+
+</body>
+</html>
